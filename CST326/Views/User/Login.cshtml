@@ -1,0 +1,21 @@
+﻿@model CST326.Models.UserModel
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+<div>
+    @using (Html.BeginForm("AuthenticateUser", "User", FormMethod.Post))
+    {
+        @Html.Label("Email:")
+        @Html.EditorFor(model => model.Email)
+        <br />
+
+        @Html.Label("Password:")
+        @Html.PasswordFor(model => model.Password)
+        <br />
+        <input type="submit" value="Login" />
+    }
+
+</div>

@@ -15,6 +15,8 @@ namespace CST326.DAO
 
         string addUserQry = "insert into Users (First_Name, Last_Name, Email, Password) values (@FirstName, @LastName, @Email, @Password)";
 
+        string authenticateQry = "select count(1) as 'count' from users where email = @email and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+
 
         public bool AddUser(UserModel user)
         {
@@ -42,9 +44,60 @@ namespace CST326.DAO
                             return false;
                         }
                     } catch (SqlException ex) {
+                        conn.Close();
                         throw new Exception("An error occured adding user to the users table.\nError: " + ex.Message);
                     } catch (Exception ex)
                     {
+                        conn.Close();
+                        throw new Exception("An unexpected error has occured.\nError: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        public bool Authenticate(UserModel user)
+        {
+            using(SqlConnection conn = new SqlConnection(dbConnStr))
+            {
+                using(SqlCommand cmd = new SqlCommand(authenticateQry, conn))
+                {
+                    cmd.Parameters.AddWithValue("@email", user.Email);
+                    cmd.Parameters.AddWithValue("@password", user.Password);
+                    
+                    try
+                    {
+                        conn.Open();
+                        var reader = cmd.ExecuteReader();
+                        int count = 0;
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            count = (int)reader["count"];
+                            conn.Close();
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                        
+                        if(count > 0)
+                        {
+                            return true;
+                        } else
+                        {
+                            return false;
+                        }
+                        
+                    }
+                    catch (SqlException ex)
+                    {
+                        conn.Close();
+                        throw new Exception("An error occured authenticating user.\nError: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        conn.Close();
                         throw new Exception("An unexpected error has occured.\nError: " + ex.Message);
                     }
                 }

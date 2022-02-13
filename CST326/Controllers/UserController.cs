@@ -16,6 +16,11 @@ namespace CST326.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
@@ -25,5 +30,15 @@ namespace CST326.Controllers
 
             return Content(results.ToString());
         } 
+
+        [HttpPost]
+        public ActionResult AuthenticateUser(UserModel user)
+        {
+            UserDAO dao = new UserDAO();
+
+            var results = dao.Authenticate(user);
+
+            return Content(results.ToString());
+        }
     }
 }
