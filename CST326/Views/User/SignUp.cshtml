@@ -1,27 +1,35 @@
 ﻿@model CST326.Models.UserModel
 @{
     ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 
-<h2>SignUp</h2>
+
 
 <div>
-@using(Html.BeginForm("AddUser", "User", FormMethod.Post))
-{
-    @Html.Label("First Name:")
-    @Html.EditorFor(model => model.FirstName)
-    <br/>
-    @Html.Label("Last Name:")
-    @Html.EditorFor(model => model.LastName)
-    <br/>
-    @Html.Label("Email:")
-    @Html.EditorFor(model => model.Email)
-    <br/>
-    @Html.Label("Password")
-    @Html.PasswordFor(model => model.Password)
-    <br/>
-    <input type="submit" value="SignUp"/>
-
-}
-
+    <div class="formcenter">
+    <h2>Sign Up</h2>
+    @using (Html.BeginForm("AddUser", "User", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.Label("First Name:", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group">
+            @Html.Label("Last Name:", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group">
+            @Html.Label("Email:", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group">
+            @Html.Label("Password", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">SignUp</button>
+        </div>
+    }
+    </div>
 </div>
