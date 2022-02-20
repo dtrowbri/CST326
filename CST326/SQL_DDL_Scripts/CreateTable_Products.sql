@@ -1,7 +1,7 @@
 ﻿USE [PCPartsDB]
 GO
 
-/****** Object:  Table [dbo].[Products]    Script Date: 2/11/2022 9:51:15 PM ******/
+/****** Object:  Table [dbo].[Products]    Script Date: 2/19/2022 5:10:29 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -14,6 +14,7 @@ CREATE TABLE [dbo].[Products](
 	[Description] [nvarchar](max) NOT NULL,
 	[Price] [money] NOT NULL,
 	[Category] [nvarchar](50) NULL,
+	[ImageLocation] [nvarchar](max) NULL,
  CONSTRAINT [PK_Products] PRIMARY KEY CLUSTERED 
 (
 	[ProductId] ASC

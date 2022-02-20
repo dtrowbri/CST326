@@ -1,0 +1,46 @@
+﻿@model CST326.Models.ProductModel
+
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+@using (Html.BeginForm("CreateProduct", "Product",  FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="formcenter">
+        <h2> Add Product</h2>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "col-form-label col-md-3" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "col-form-label col-md-3" })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "col-form-label col-md-3" })
+
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+
+        </div> 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "col-form-label col-md-3" })
+            @Html.DropDownListFor(model => model.Category, new SelectList(Enum.GetValues(typeof(CST326.Models.ProductCategory))))
+            @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+
+        </div>
+
+
+        <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary col-md-offset-3"/>
+        </div>
+    </div>
+}
