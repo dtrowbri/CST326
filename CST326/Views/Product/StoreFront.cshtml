@@ -1,0 +1,24 @@
+﻿@model System.Collections.Generic.List<CST326.Models.ProductModel>
+@{
+    ViewBag.Title = "StoreFront";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<div style="display:block" class="container">
+@foreach (var product in Model)
+{
+    
+        <div class="card" style="width: 200px; border: 1px black solid; margin: 25px; display:inline-block;">
+            <img src="@product.ProductImageLocation" class="card-img-top" style="width: 200px; height: 200px;" />
+            <div class="card-body">
+                <h5 class="card-title" style="text-align: center">@product.Name</h5>
+                <h5 class="card-text" style="text-align: center">$@product.Price.ToString()</h5>
+                @using(Html.BeginForm("ViewProduct", "Product", FormMethod.Post)) {
+                    <input type="hidden" value="@product.ProductId" name="ProductId" />
+                    <input type="submit" value="View" style="width: 50%; margin-left: 25%;" />
+                }
+            </div>
+        </div>
+    
+}
+</div>

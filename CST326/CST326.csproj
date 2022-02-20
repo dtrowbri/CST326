@@ -180,6 +180,8 @@
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Shared\_CustomLayout.cshtml" />
     <Content Include="Views\Product\AddProduct.cshtml" />
+    <Content Include="Views\Product\StoreFront.cshtml" />
+    <Content Include="Views\Product\ViewProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

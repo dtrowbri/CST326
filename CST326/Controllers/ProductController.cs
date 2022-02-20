@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using CST326.Models;
 using CST326.DAO;
 using System.IO;
+using System.Collections.Generic;
 
 namespace CST326.Controllers
 {
@@ -30,7 +31,7 @@ namespace CST326.Controllers
                 filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
                 string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
                 product.ImageFile.SaveAs(serverpath);
-                product.ProductImageLocation = serverpath.ToString();
+                product.ProductImageLocation = "/ProductImages/" + filename;
             }
             catch
             {
@@ -48,6 +49,21 @@ namespace CST326.Controllers
             }
 
             return Content("Product added successfully");
+        }
+
+        public ActionResult StoreFront()
+        {
+            ProductDAO dao = new ProductDAO();
+            List<ProductModel> productlist = dao.GetAllProducts();
+            return View(productlist);
+        }
+
+        public ActionResult ViewProduct(int ProductId)
+        {
+            ProductDAO dao = new ProductDAO();
+            ProductModel product = dao.GetProduct(ProductId);
+
+            return View(product);
         }
     }
 }
