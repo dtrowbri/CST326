@@ -21,6 +21,8 @@ namespace CST326.Models
         public ProductCategory Category { get; set; }
 
         public string ProductImageLocation { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
     }
 
     public enum ProductCategory

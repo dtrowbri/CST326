@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CST326.Models;
 using CST326.DAO;
+using System.IO;
 
 namespace CST326.Controllers
 {
@@ -23,6 +24,20 @@ namespace CST326.Controllers
 
         public ActionResult CreateProduct(ProductModel product)
         {
+            try
+            {
+                string filename = Path.GetFileName(product.ImageFile.FileName);
+                filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
+                string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
+                product.ImageFile.SaveAs(serverpath);
+                product.ProductImageLocation = serverpath.ToString();
+            }
+            catch
+            {
+                return Content("Error uploading image");
+            }
+
+
             ProductDAO dao = new ProductDAO();
             try
             {

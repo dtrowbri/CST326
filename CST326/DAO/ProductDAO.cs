@@ -12,7 +12,7 @@ namespace CST326.DAO
     {
         string dbConnStr = ConfigurationManager.ConnectionStrings["SiteDB"].ConnectionString;
 
-        string CreateProductQuery = "insert into products ([name], [description], [price], [category]) values (@name, @description, @price, @category)";
+        string CreateProductQuery = "insert into products ([name], [description], [price], [category], [ImageLocation]) values (@name, @description, @price, @category, @imagelocation)";
 
 
         public bool CreateProduct(ProductModel product)
@@ -25,7 +25,8 @@ namespace CST326.DAO
                     cmd.Parameters.AddWithValue("@description", product.Description);
                     cmd.Parameters.AddWithValue("@price", product.Price);
                     cmd.Parameters.AddWithValue("@category", product.Category.ToString());
-
+                    cmd.Parameters.AddWithValue("@imagelocation", product.ProductImageLocation);
+                    
                     try
                     {
                         conn.Open();
