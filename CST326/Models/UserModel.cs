@@ -26,5 +26,9 @@ namespace CST326.Models
             Email = email;
             Password = password;
         }
+
+        public UserModel()
+        {
+        }
     }
 }

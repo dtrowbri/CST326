@@ -7,7 +7,7 @@ namespace CST326.Models
 {
     public class ProductModel
     {
-        private ProductCategory category;
+       // private ProductCategory category;
 
         public int ProductId { get; set; }
 
@@ -23,6 +23,21 @@ namespace CST326.Models
         public string ProductImageLocation { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
+
+        public ProductModel(int productId, string name, string description, double price, ProductCategory category, string productImageLocation, HttpPostedFileBase imageFile)
+        {
+            ProductId = productId;
+            Name = name;
+            Description = description;
+            Price = price;
+            Category = category;
+            ProductImageLocation = productImageLocation;
+            ImageFile = imageFile;
+        }
+
+        public ProductModel()
+        {
+        }
     }
 
     public enum ProductCategory
