@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using CST326.Models;
 using CST326.DAO;
 using System.IO;
-using System.Collections.Generic;
 
 namespace CST326.Controllers
 {
