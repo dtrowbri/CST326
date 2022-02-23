@@ -18,5 +18,8 @@ namespace CST326.Controllers
         {
             return View();
         }
+
+        // add method for adding employees but require employee to be an admin
+
     }
 }
