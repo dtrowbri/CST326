@@ -13,5 +13,10 @@ namespace CST326.Controllers
         {
             return View();
         }
+
+        public ActionResult EmployeeLogin()
+        {
+            return View();
+        }
     }
 }
