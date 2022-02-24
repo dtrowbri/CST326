@@ -156,6 +156,7 @@
     <Content Include="SQL_DDL_Scripts\CreateDatabase.sql" />
     <Content Include="SQL_DDL_Scripts\CreateTable_Addresses.sql" />
     <Content Include="SQL_DDL_Scripts\CreateTable_CreditCards.sql" />
+    <Content Include="SQL_DDL_Scripts\CreateTable_Employees.sql" />
     <Content Include="SQL_DDL_Scripts\CreateTable_Products.sql" />
     <Content Include="SQL_DDL_Scripts\CreateTable_Users.sql" />
     <Content Include="SQL_DDL_Scripts\CreateTable_Users_X_Addresses.sql" />
