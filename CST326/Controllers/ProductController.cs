@@ -64,5 +64,15 @@ namespace CST326.Controllers
 
             return View(product);
         }
+
+        public ActionResult DeleteProduct(int ProductId)
+        {
+            return Content(ProductId.ToString());
+        }
+
+        public ActionResult EditProduct(int ProductId)
+        {
+            return Content(ProductId.ToString());
+        }
     }
 }

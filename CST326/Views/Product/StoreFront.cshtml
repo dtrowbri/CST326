@@ -5,16 +5,13 @@
 }
 
 <script type="text/javascript">
-    function searchImages() {
+    function searchProducts() {
         var searchPattern = document.getElementById("searchTextBox").value;
         var titles = document.getElementsByClassName("card-title");
-        //window.alert("1");
         for (var i = 0; i < titles.length; i++) {
-            if (titles[i].innerHTML.includes(searchPattern)) {
-               //window.alert("2");
+            if (titles[i].innerHTML.toLowerCase().includes(searchPattern.toLowerCase())) {
                 titles[i].parentNode.parentNode.parentNode.style.display = "inline-block";
             } else {
-                //window.alert("3");
                 titles[i].parentNode.parentNode.parentNode.style.display = "none";
             }
         }
@@ -23,7 +20,7 @@
 
 <div style="margin-top: 30px; margin-left: 3.5%">
     <input type="text" style="width:75%; max-width: 100%;" id="searchTextBox" />
-    <input type="submit" onclick="searchImages()" value="search"/>
+    <input type="submit" onclick="searchProducts()" value="search"/>
 </div>
     <div style="display:block" class="container">
         @foreach (var product in Model)
