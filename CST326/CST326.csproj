@@ -178,7 +178,6 @@
     <Content Include="Views\Product\AddProduct.cshtml" />
     <Content Include="Views\Product\StoreFront.cshtml" />
     <Content Include="Views\Product\ViewProduct.cshtml" />
-    <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\StoreRep\ProductList.cshtml" />
   </ItemGroup>
   <ItemGroup>

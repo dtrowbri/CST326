@@ -27,9 +27,9 @@
         var titles = document.getElementsByClassName("productName");
         for (var i = 0; i < titles.length; i++) {
             if (titles[i].innerHTML.includes(searchPattern)) {
-                titles[i].parentNode.parentNode.parentNode.style.display = "inline-block";
+                titles[i].parentNode.style = "";
             } else {
-                titles[i].parentNode.parentNode.parentNode.style.display = "none";
+                titles[i].parentNode.style.display = "none";
             }
         }
     }
