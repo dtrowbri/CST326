@@ -59,14 +59,14 @@
                     <td scope="col">@product.Description</td>
                     <td scope="col">$@product.Price</td>
                     <td scope="col">
-                        @using (Html.BeginForm("EditProduct", "Product", FormMethod.Post))
+                        @using (Html.BeginForm("EditProduct", "StoreRep", FormMethod.Get))
                         {
                             <input type="hidden" value="@product.ProductId" name="ProductId"/>
                             <input type="submit" value="Edit" class="looklikelink" />
                         }
                     </td>
                     <td scope="col">
-                        @using (Html.BeginForm("DeleteProduct", "Product", FormMethod.Post))
+                        @using (Html.BeginForm("DeleteProduct", "StoreRep", FormMethod.Get))
                         {
                             <input type="hidden" value="@product.ProductId" name="ProductId" />
                             <input type="submit" value="Delete" class="looklikelink"/>

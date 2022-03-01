@@ -24,19 +24,21 @@ namespace CST326.Controllers
 
         public ActionResult CreateProduct(ProductModel product)
         {
-            try
+            if (product.ImageFile != null)
             {
-                string filename = Path.GetFileName(product.ImageFile.FileName);
-                filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
-                string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
-                product.ImageFile.SaveAs(serverpath);
-                product.ProductImageLocation = "/ProductImages/" + filename;
+                try
+                {
+                    string filename = Path.GetFileName(product.ImageFile.FileName);
+                    filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
+                    string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
+                    product.ImageFile.SaveAs(serverpath);
+                    product.ProductImageLocation = "/ProductImages/" + filename;
+                }
+                catch
+                {
+                    return Content("Error uploading image");
+                }
             }
-            catch
-            {
-                return Content("Error uploading image");
-            }
-
 
             ProductDAO dao = new ProductDAO();
             try
@@ -63,16 +65,6 @@ namespace CST326.Controllers
             ProductModel product = dao.GetProduct(ProductId);
 
             return View(product);
-        }
-
-        public ActionResult DeleteProduct(int ProductId)
-        {
-            return Content(ProductId.ToString());
-        }
-
-        public ActionResult EditProduct(int ProductId)
-        {
-            return Content(ProductId.ToString());
         }
     }
 }

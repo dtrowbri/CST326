@@ -19,6 +19,9 @@ namespace CST326.DAO
 
         string GetProductQuery = "select [ProductId] as 'ProductId', [Name] as 'Name', [Description] as 'Description', [Price] as 'Price', [Category] as 'Category', [ImageLocation] as 'ImageLocation' from products where productid = @productid";
 
+        string UpdateProductQuery = "update products set [Name] = @Name, [Description] = @Description, [Price] = @Price, [Category] = @Category, [ImageLocation] = @ImageLocation where [ProductId] = @ProductId";
+
+        string DeleteProductQuery = "delete from [Products] where [ProductId] = @ProductId";
         public bool CreateProduct(ProductModel product)
         {
             using(SqlConnection conn = new SqlConnection(dbConnStr))
@@ -126,6 +129,84 @@ namespace CST326.DAO
                     {
                         throw new Exception("There was an error retrieving product with product id {" + id.ToString() + "} from the database. Error: " + ex.Message);
                     }
+                }
+            }
+        }
+    
+        public bool EditProduct(ProductModel product)
+        {
+            using(SqlConnection conn = new SqlConnection(dbConnStr))
+            {
+                using(SqlCommand cmd = new SqlCommand(UpdateProductQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Name", product.Name);
+                    cmd.Parameters.AddWithValue("@Description", product.Description);
+                    cmd.Parameters.AddWithValue("@Price", product.Price);
+                    cmd.Parameters.AddWithValue("@Category", product.Category);
+                    cmd.Parameters.AddWithValue("@ImageLocation", product.ProductImageLocation);
+                    cmd.Parameters.AddWithValue("@ProductId", product.ProductId);
+
+                    try
+                    {
+                        conn.Open();
+                        int results = cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        if(results == 1)
+                        {
+                            return true;
+                        } else
+                        {
+                            return false;
+                        }
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        conn.Close();
+                        throw new Exception("An error occured adding user to the users table.\nError: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        conn.Close();
+                        throw new Exception("An unexpected error has occured.\nError: " + ex.Message);
+                    }
+                }
+            }
+        }
+
+        public bool DeleteProduct(int productid)
+        {
+            using(SqlConnection conn = new SqlConnection(dbConnStr))
+            {
+                using(SqlCommand cmd = new SqlCommand(DeleteProductQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@ProductId", productid);
+                    try
+                    {
+                        conn.Open();
+                        int results = cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        if(results == 1)
+                        {
+                            return true;
+                        } else
+                        {
+                            return false;
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        conn.Close();
+                        throw new Exception("An error occured adding user to the users table.\nError: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        conn.Close();
+                        throw new Exception("An unexpected error has occured.\nError: " + ex.Message);
+                    }
+
                 }
             }
         }
