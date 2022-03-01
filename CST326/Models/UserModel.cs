@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace CST326.Models
 {
@@ -14,8 +15,12 @@ namespace CST326.Models
 
         public string LastName { get; set; }
 
+        [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
+        [Required]
+        [StringLength(maximumLength: 200, MinimumLength = 1)]
         public string Password { get; set; }
 
     }

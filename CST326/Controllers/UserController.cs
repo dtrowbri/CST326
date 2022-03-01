@@ -29,16 +29,31 @@ namespace CST326.Controllers
             var results = dao.AddUser(user);
 
             return Content(results.ToString());
-        } 
+        }
 
         [HttpPost]
         public ActionResult AuthenticateUser(UserModel user)
         {
-            UserDAO dao = new UserDAO();
+            if (ModelState.IsValid) { 
+                UserDAO dao = new UserDAO();
 
-            var results = dao.Authenticate(user);
+                var customer = dao.Authenticate(user);
 
-            return Content(results.ToString());
+                if (customer.Email != null)
+                {
+                    Session["User"] = customer;
+                    //return Content(customer.UserId.ToString());
+                    return RedirectToAction("StoreFront", "Product");
+                }
+                else
+                {
+                    ModelState.AddModelError("Email", "Username or password is incorrect. Please try again.");
+                    return View("Login", user);
+                    
+                }
+            } else {
+                return View("Login", user);
+            }
         }
     }
 }

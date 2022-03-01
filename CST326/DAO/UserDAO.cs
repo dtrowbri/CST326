@@ -15,7 +15,7 @@ namespace CST326.DAO
 
         string addUserQry = "insert into Users (First_Name, Last_Name, Email, Password) values (@FirstName, @LastName, @Email, @Password)";
 
-        string authenticateQry = "select count(1) as 'count' from users where email = @email and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+        string authenticateQry = "select User_Id as 'UserId', First_Name as 'FirstName', Last_Name as 'LastName', Email as 'Email' from users where email = @email and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
 
 
         public bool AddUser(UserModel user)
@@ -55,7 +55,7 @@ namespace CST326.DAO
             }
         }
 
-        public bool Authenticate(UserModel user)
+        public UserModel Authenticate(UserModel user)
         {
             using(SqlConnection conn = new SqlConnection(dbConnStr))
             {
@@ -68,27 +68,25 @@ namespace CST326.DAO
                     {
                         conn.Open();
                         var reader = cmd.ExecuteReader();
-                        int count = 0;
 
                         if (reader.HasRows)
                         {
                             reader.Read();
-                            count = (int)reader["count"];
+
+                            UserModel customer = new UserModel();
+                            customer.UserId = (int)reader["UserId"];
+                            customer.FirstName = reader["FirstName"].ToString();
+                            customer.LastName = reader["LastName"].ToString();
+                            customer.Email = reader["Email"].ToString();
+
                             conn.Close();
+                            return customer;
                         }
                         else
                         {
-                            return false;
-                        }
-                        
-                        if(count > 0)
-                        {
-                            return true;
-                        } else
-                        {
-                            return false;
-                        }
-                        
+                            conn.Close();
+                            return new UserModel();
+                        }                        
                     }
                     catch (SqlException ex)
                     {
