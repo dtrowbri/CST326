@@ -74,14 +74,14 @@ namespace CST326.Controllers
 
             ProductDAO dao = new ProductDAO();
             product = dao.GetProduct(product.ProductId);
-
-            List<ProductModel> shoppingCart;
+            product.Quantity = quantity;
+            ShoppingCart shoppingCart;
             if(Session["ShoppingCart"] != null)
             {
-                shoppingCart = (List<ProductModel>)Session["ShoppingCart"];
+                shoppingCart = (ShoppingCart)Session["ShoppingCart"];
             } else
             {
-                shoppingCart = new List<ProductModel>();
+                shoppingCart = new ShoppingCart();
             }
 
             shoppingCart.Add(product);

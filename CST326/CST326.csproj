@@ -119,6 +119,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoreRepController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DAO\ProductDAO.cs" />
@@ -127,6 +128,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -180,6 +182,7 @@
     <Content Include="Views\Product\ViewProduct.cshtml" />
     <Content Include="Views\StoreRep\ProductList.cshtml" />
     <Content Include="Views\StoreRep\EditProduct.cshtml" />
+    <Content Include="Views\ShoppingCart\ShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

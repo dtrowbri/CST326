@@ -35,9 +35,9 @@
     </div>
     <div>
         <p class="title">@Model.Name</p>
-        <p class="description">@Model.Description asdfasdfasdfasdfasdfasdfasdfa;lsdhfpagbhopwbhopqhewb;oae hrgoasdh ngv pawehtnpabowrythbnpawe4ytnba hwerhg auierg haeo;ur tghaou; werghs</p>
+        <p class="description">@Model.Description</p>
         <p class="price">$@Model.Price</p>
-        @using (Html.BeginForm("AddToCart", "Product", FormMethod.Post))
+        @using(Html.BeginForm("AddToCart", "Product", FormMethod.Post))
         {
             <div class="form-group">
                 @Html.HiddenFor(model => model.ProductId)

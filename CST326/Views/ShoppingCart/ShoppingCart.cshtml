@@ -1,0 +1,42 @@
+﻿@using CST326.Models
+@model CST326.Models.ShoppingCart
+@{
+    ViewBag.Title = "ShoppingCart";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+
+<div class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col">Product</th>
+                <th class="col">Quantity</thclass="col">
+                <th class="col">Price</th>
+            </tr>
+        </thead>
+        @foreach(ProductModel product in Model.products)
+        {
+            <tr>
+                <td class="col">@product.Name</td>
+                <td class="col">@product.Quantity</td>
+                <td class="col">$@product.Price</td>
+            </tr>
+        }
+        <tr>
+            <td class="col"></td>
+            <td class="col">Shipping</td>
+            <td class="col">$@Model.getShipping().ToString("#.##")</td>
+        </tr>
+        <tr>
+            <td class="col"></td>
+            <td class="col">Taxes</td>
+            <td class="col">$@Model.getTaxes().ToString("#.##")</td>
+        </tr>
+        <tr>
+            <td class="col"></td>
+            <td class="col">Total</td>
+            <td class="col">$@Model.getTotal().ToString("#.##")</td>
+        </tr>
+    </table>
+</div>
