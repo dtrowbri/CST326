@@ -66,5 +66,29 @@ namespace CST326.Controllers
 
             return View(product);
         }
+
+        [HttpPost]
+        public ActionResult AddToCart(ProductModel product)
+        {
+            int quantity = product.Quantity;
+
+            ProductDAO dao = new ProductDAO();
+            product = dao.GetProduct(product.ProductId);
+
+            List<ProductModel> shoppingCart;
+            if(Session["ShoppingCart"] != null)
+            {
+                shoppingCart = (List<ProductModel>)Session["ShoppingCart"];
+            } else
+            {
+                shoppingCart = new List<ProductModel>();
+            }
+
+            shoppingCart.Add(product);
+
+            Session["ShoppingCart"] = shoppingCart;
+
+            return Content("Item added to cart");
+        }
     }
 }

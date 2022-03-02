@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.ComponentModel.DataAnnotations;
 
 namespace CST326.Models
 {
@@ -23,6 +24,10 @@ namespace CST326.Models
         public string ProductImageLocation { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
+
+        [Range(0, 1000)]
+        [Display(Name= "QTY")]
+        public int Quantity { get; set; }
     }
 
     public enum ProductCategory
