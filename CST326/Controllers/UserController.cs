@@ -24,11 +24,18 @@ namespace CST326.Controllers
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
+            ModelState["FirstName"].Errors.Clear();
+            if(user.FirstName == null || user.LastName == null || user.Email == null || user.Password == null)
+            {
+                ModelState.AddModelError("FirstName", "All fields must be populated before creating your account.");
+                return View("Signup", user);
+            }
+
             UserDAO dao = new UserDAO();
 
             var results = dao.AddUser(user);
 
-            return Content(results.ToString());
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
