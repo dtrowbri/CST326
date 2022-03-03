@@ -6,7 +6,7 @@
 }
 
 
-<div class="container">
+<div class="container" style="margin-top: 5%;">
     <table class="table">
         <thead>
             <tr>
@@ -15,12 +15,12 @@
                 <th class="col">Price</th>
             </tr>
         </thead>
-        @foreach(ProductModel product in Model.products)
+        @foreach (ProductModel product in Model.products)
         {
             <tr>
                 <td class="col">@product.Name</td>
                 <td class="col">@product.Quantity</td>
-                <td class="col">$@product.Price</td>
+                <td class="">$@product.Price</td>
             </tr>
         }
         <tr>
@@ -37,6 +37,18 @@
             <td class="col"></td>
             <td class="col">Total</td>
             <td class="col">$@Model.getTotal().ToString("#.##")</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td>
+                @using (Html.BeginForm("CreateOrder", "ShoppingCart", FormMethod.Post))
+                {
+                    <div class="form-group">
+                        <input type="submit" value="Place Order" class="btn-primary" />
+                    </div>
+                }
+            </td>
         </tr>
     </table>
 </div>

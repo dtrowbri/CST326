@@ -47,6 +47,9 @@ namespace CST326.Models
             this.products.Add(product);
         }
 
-        
+        public int CustomerId { get; set; }
+
+        public int AddressId { get; set; }
+        public int CreditCardId { get; set; }
     }
 }

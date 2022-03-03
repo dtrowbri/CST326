@@ -82,6 +82,13 @@ namespace CST326.Controllers
             } else
             {
                 shoppingCart = new ShoppingCart();
+                if (Session["User"] != null)
+                {
+                    shoppingCart.CustomerId = (int)(((UserModel)Session["User"]).UserId);
+                } else
+                {
+                    shoppingCart.CustomerId = 1;
+                }
             }
 
             shoppingCart.Add(product);
