@@ -62,5 +62,14 @@ namespace CST326.Controllers
                 return View("Login", user);
             }
         }
+
+        public ActionResult SignOut()
+        {
+            if(Session["User"] != null)
+            {
+                Session["User"] = null;
+            }
+            return RedirectToAction("Login");
+        }
     }
 }

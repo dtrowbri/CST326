@@ -11,12 +11,6 @@ namespace CST326.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult AddProduct()
         {
             return View();
