@@ -60,11 +60,12 @@
                             @if (Session["User"] == null)
                             {
                                 <li>@Html.ActionLink("Login", "Login", "User")</li>
-                                <li>@Html.ActionLink("Sign Up", "Sing", "User")</li>
+                                <li>@Html.ActionLink("Sign Up", "SignUp", "User")</li>
                             }
                             else
                             {
                                 <li><a href="#">Orders</a></li>
+                                <li>@Html.ActionLink("Reset Password", "ResetPassword", "User")</li>
                                 <li role="separator" class="divider"></li>
                                 <li>@Html.ActionLink("Sign Out", "SignOut", "User")</li>
                             }
