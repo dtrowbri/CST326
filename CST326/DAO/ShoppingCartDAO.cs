@@ -109,7 +109,7 @@ namespace CST326.DAO
             }
         }
 
-        public bool AddOrder(ShoppingCart cart)
+        public int AddOrder(ShoppingCart cart)
         {
             SqlTransaction tran = null;
             using (SqlConnection conn = new SqlConnection(dbConnStr))
@@ -132,24 +132,24 @@ namespace CST326.DAO
                                 {
                                     tran.Rollback();
                                     conn.Close();
-                                    return false;
+                                    return 0;
                                 }
                             } else
                             {
                                 tran.Rollback();
                                 conn.Close();
-                                return false;
+                                return 0;
                             }
                         }
                     } else
                     {
                         tran.Rollback();
                         conn.Close();
-                        return false;
+                        return 0;
                     }
                     tran.Commit();
                     conn.Close();
-                    return true;
+                    return orderid;
                 }
                 catch (SqlException ex)
                 {

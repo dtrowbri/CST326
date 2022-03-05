@@ -38,15 +38,36 @@ namespace CST326.Controllers
         {
             ShoppingCart cart = (ShoppingCart)Session["ShoppingCart"];
             ShoppingCartDAO dao = new ShoppingCartDAO();
-            bool wasSuccessful = dao.AddOrder(cart);
-            if (wasSuccessful)
+            int orderid = dao.AddOrder(cart);
+            if (orderid > 0)
             {
                 Session["ShoppingCart"] = null;
-                return Content("Order submitted");
+                OrderId id = new OrderId();
+                id.Id = orderid;
+                return View("OrderSuccess", id);
             } else
             {
-                return Content("Order was not submitted");
+                return View("OrderFailure");
             }
         }
+    
+        /*public ActionResult TestOrder()
+        {
+            OrderId id = new OrderId();
+            id.Id = 326;
+            return View("OrderSuccess", id);
+        }*/
+
+        public ActionResult OrderSuccess(OrderId id)
+        {
+            return View(id);
+        }
+
+        public ActionResult OrderFailure()
+        {
+            return View();
+        }
+
+
     }
 }
