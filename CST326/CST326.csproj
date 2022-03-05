@@ -187,6 +187,7 @@
     <Content Include="Views\StoreRep\ProductList.cshtml" />
     <Content Include="Views\StoreRep\EditProduct.cshtml" />
     <Content Include="Views\ShoppingCart\ShoppingCart.cshtml" />
+    <Content Include="Views\User\ResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

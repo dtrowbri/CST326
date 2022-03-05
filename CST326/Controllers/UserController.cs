@@ -21,6 +21,41 @@ namespace CST326.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ResetPassword()
+        { 
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult ResetPassword(UserModel user)
+        {
+            
+            UserDAO dao = new UserDAO();
+            if (dao.isEmailValid(user))
+            {
+                bool updateSuccessful = dao.setNewPassword(user);
+                if (updateSuccessful)
+                {
+                    return RedirectToAction("Login");
+                } else
+                {
+                    string email = user.Email;
+                    ModelState.Clear();
+                    ModelState.AddModelError("Email", "There was an unexpected error trying to update the password. Please reach out to the support team.");
+                    return View(user);
+                }
+            }
+            else
+            {
+                ModelState.Clear();
+                ModelState.AddModelError("Email", "The email is not found. Please validate that your email is correct.");
+                return View(user);
+            }
+        }
+
+
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
