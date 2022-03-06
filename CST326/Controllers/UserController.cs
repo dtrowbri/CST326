@@ -106,5 +106,22 @@ namespace CST326.Controllers
             }
             return RedirectToAction("Login");
         }
+    
+        [HttpGet]
+        public ActionResult ViewOrders()
+        {
+            if(Session["user"] != null)
+            {
+                UserModel user = (UserModel)Session["user"];
+
+                OrdersDAO dao = new OrdersDAO();
+                List<OrderModel> orders = dao.getCustomerOrders(user);
+
+                return View(orders);
+            } else
+            {
+                return RedirectToAction("Login", "User", null);
+            }
+        }
     }
 }

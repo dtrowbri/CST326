@@ -122,6 +122,7 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\StoreRepController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="DAO\OrdersDAO.cs" />
     <Compile Include="DAO\ProductDAO.cs" />
     <Compile Include="DAO\ShoppingCartDAO.cs" />
     <Compile Include="DAO\UserDAO.cs" />
@@ -129,6 +130,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\OrderId.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ShoppingCart.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -191,6 +193,7 @@
     <Content Include="Views\User\ResetPassword.cshtml" />
     <Content Include="Views\ShoppingCart\OrderSuccess.cshtml" />
     <Content Include="Views\ShoppingCart\OrderFailure.cshtml" />
+    <Content Include="Views\User\ViewOrders.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
