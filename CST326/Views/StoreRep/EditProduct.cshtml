@@ -1,0 +1,62 @@
+﻿@model CST326.Models.ProductModel
+
+@{
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+@using (Html.BeginForm("EditProduct", "StoreRep",FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="formcenter">
+    <h2 style="margin-left: 5%">Edit Product</h2>
+    <img style="width:250px;height:250px;margin-bottom: 5%; margin-top: 5%;" src="@Model.ProductImageLocation" class="col-md-offset-4" />
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProductId, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.EditorFor(model => model.ProductId, new { htmlAttributes = new { @class = "form-control", disabled = "disabled" } })
+        @Html.HiddenFor(model => model.ProductId)
+        @Html.ValidationMessageFor(model => model.ProductId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-4" })
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Image", htmlAttributes: new { @class = "col-form-label col-md-4" })
+        <input type="file" name="ImageFile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Category, htmlAttributes: new { @class = "col-form-label col-md-4" })
+        @Html.DropDownListFor(model => model.Category, new SelectList(Enum.GetValues(typeof(CST326.Models.ProductCategory))), Model.Category)
+        @Html.ValidationMessageFor(model => model.Category, "", new { @class = "text-danger" })
+
+    </div>
+
+    <div class="form-group">
+        @Html.HiddenFor(model => model.ProductImageLocation)
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-default col-md-offset-4" />
+    </div>
+</div>
+}

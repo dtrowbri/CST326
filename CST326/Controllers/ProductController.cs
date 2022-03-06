@@ -11,12 +11,6 @@ namespace CST326.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: Product
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         public ActionResult AddProduct()
         {
             return View();
@@ -24,19 +18,21 @@ namespace CST326.Controllers
 
         public ActionResult CreateProduct(ProductModel product)
         {
-            try
+            if (product.ImageFile != null)
             {
-                string filename = Path.GetFileName(product.ImageFile.FileName);
-                filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
-                string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
-                product.ImageFile.SaveAs(serverpath);
-                product.ProductImageLocation = "/ProductImages/" + filename;
+                try
+                {
+                    string filename = Path.GetFileName(product.ImageFile.FileName);
+                    filename = DateTime.Now.ToString("MMddyyyyHHmmss") + filename;
+                    string serverpath = Path.Combine(Server.MapPath("~/ProductImages"), filename);
+                    product.ImageFile.SaveAs(serverpath);
+                    product.ProductImageLocation = "/ProductImages/" + filename;
+                }
+                catch
+                {
+                    return Content("Error uploading image");
+                }
             }
-            catch
-            {
-                return Content("Error uploading image");
-            }
-
 
             ProductDAO dao = new ProductDAO();
             try
@@ -63,6 +59,37 @@ namespace CST326.Controllers
             ProductModel product = dao.GetProduct(ProductId);
 
             return View(product);
+        }
+
+        [HttpPost]
+        public ActionResult AddToCart(ProductModel product)
+        {
+            int quantity = product.Quantity;
+
+            ProductDAO dao = new ProductDAO();
+            product = dao.GetProduct(product.ProductId);
+            product.Quantity = quantity;
+            ShoppingCart shoppingCart;
+            if(Session["ShoppingCart"] != null)
+            {
+                shoppingCart = (ShoppingCart)Session["ShoppingCart"];
+            } else
+            {
+                shoppingCart = new ShoppingCart();
+                if (Session["User"] != null)
+                {
+                    shoppingCart.CustomerId = (int)(((UserModel)Session["User"]).UserId);
+                } else
+                {
+                    shoppingCart.CustomerId = 1;
+                }
+            }
+
+            shoppingCart.Add(product);
+
+            Session["ShoppingCart"] = shoppingCart;
+
+            return Content("Item added to cart");
         }
     }
 }

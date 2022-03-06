@@ -1,0 +1,35 @@
+﻿@using CST326.Models
+@model System.Collections.Generic.List<OrderModel>
+@{
+    ViewBag.Title = "ViewOrders";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<h2 style="margin-top: 5%;">Your Orders</h2>
+<div style="display:block; margin-top: 5%" class="container">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">OrderId</th>
+                <th scope="col">Total</th>
+                <th scope="col">View</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (OrderModel order in Model)
+            {
+                <tr>
+                    <td scope="col">@order.OrderId</td>
+                    <td scope="col">@order.Total</td>
+                    <td scope="col">
+                        @using (Html.BeginForm("ViewOrder", "User", FormMethod.Get))
+                        {
+                            <input type="hidden" value="@order.OrderId" name="OrderId" />
+                            <input type="submit" value="View Order Details" class="looklikelink" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

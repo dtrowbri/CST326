@@ -1,0 +1,48 @@
+﻿@using CST326.Models
+@model CST326.Models.OrderModel
+@{
+    ViewBag.Title = "ViewOrder";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<div class="formcenter">
+    <div class="form-group">
+        @Html.Label("OrderId", htmlAttributes: new { @class = "col-md-5 col-form-label" })
+        <label class="col-md-5 col-form-label">$@Model.OrderId.ToString()</label>
+    </div>
+    <div class="form-group">
+        @Html.Label("Shipping", htmlAttributes: new { @class = "col-md-5 col-form-label" })
+        <label class="col-md-5 col-form-label">$@Model.Shipping.ToString("#.##")</label>
+    </div>
+    <div class="form-group">
+        @Html.Label("Taxes", htmlAttributes: new { @class = "col-md-5 col-form-label" })
+        <label class="col-md-5 col-form-label">$@Model.Tax.ToString("#.##")</label>
+    </div>
+    <div class="form-group">
+        @Html.Label("Total", htmlAttributes: new { @class = "col-md-5 col-form-label" })
+        <label class="col-md-5 col-form-label">$@Model.Total.ToString("#.##")</label>
+    </div>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td scope="col"></td>
+                <td scope="col">Name</td>
+                <td scope="col">Price</td>
+                <td scope="col">Qty</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(ProductModel product in Model.OrderItems)
+            {
+                <tr>
+                    <td scope="col"><img src="@product.ProductImageLocation" style="width: 100px; height: 100px;" /></td>
+                    <td scope="col">@product.Name</td>
+                    <td scope="col">$@product.Price</td>
+                    <td scope="col">@product.Quantity</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

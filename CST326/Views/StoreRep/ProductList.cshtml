@@ -1,0 +1,79 @@
+﻿@model System.Collections.Generic.List<CST326.Models.ProductModel>
+@{
+    ViewBag.Title = "StoreFront";
+    Layout = "~/Views/Shared/_CustomLayout.cshtml";
+}
+
+<style>
+    .looklikelink {
+        background: none !important;
+        border: none;
+        padding: 0 !important;
+        /*optional*/
+        font-family: arial, sans-serif;
+        /*input has OS specific font-family*/
+        color: #069;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+</style>
+
+
+
+
+<script type="text/javascript">
+    function searchImages() {
+        var searchPattern = document.getElementById("searchTextBox").value;
+        var titles = document.getElementsByClassName("productName");
+        for (var i = 0; i < titles.length; i++) {
+            if (titles[i].innerHTML.includes(searchPattern)) {
+                titles[i].parentNode.style = "";
+            } else {
+                titles[i].parentNode.style.display = "none";
+            }
+        }
+    }
+</script>
+
+
+<div style="margin-top: 30px; margin-left: 2%">
+    <input type="text" style="width:75%; max-width: 100%;" id="searchTextBox" />
+    <input type="submit" onclick="searchImages()" value="search" />
+</div>
+<div style="display:block; margin-top: 5%" class="container">
+   <table class="table">
+       <thead>
+           <tr>
+               <th scope="col">Product</th>
+               <th scope="col">Description</th>
+               <th scope="col">Price</th>
+               <th scope="col">Edit</th>
+               <th scope="col">Delete</th>
+           </tr>
+       </thead>
+       <tbody>
+           @foreach(var product in Model)
+            {
+                <tr>
+                    <td scope="col" class="productName">@product.Name</td>
+                    <td scope="col">@product.Description</td>
+                    <td scope="col">$@product.Price</td>
+                    <td scope="col">
+                        @using (Html.BeginForm("EditProduct", "StoreRep", FormMethod.Get))
+                        {
+                            <input type="hidden" value="@product.ProductId" name="ProductId"/>
+                            <input type="submit" value="Edit" class="looklikelink" />
+                        }
+                    </td>
+                    <td scope="col">
+                        @using (Html.BeginForm("DeleteProduct", "StoreRep", FormMethod.Get))
+                        {
+                            <input type="hidden" value="@product.ProductId" name="ProductId" />
+                            <input type="submit" value="Delete" class="looklikelink"/>
+                        }
+                    </td>
+                </tr>
+            }
+       </tbody>
+   </table>
+</div>

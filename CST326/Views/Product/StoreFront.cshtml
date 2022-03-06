@@ -4,21 +4,39 @@
     Layout = "~/Views/Shared/_CustomLayout.cshtml";
 }
 
-<div style="display:block" class="container">
-@foreach (var product in Model)
-{
-    
-        <div class="card" style="width: 200px; border: 1px black solid; margin: 25px; display:inline-block;">
-            <img src="@product.ProductImageLocation" class="card-img-top" style="width: 200px; height: 200px;" />
-            <div class="card-body">
-                <h5 class="card-title" style="text-align: center">@product.Name</h5>
-                <h5 class="card-text" style="text-align: center">$@product.Price.ToString()</h5>
-                @using(Html.BeginForm("ViewProduct", "Product", FormMethod.Post)) {
+<script type="text/javascript">
+    function searchProducts() {
+        var searchPattern = document.getElementById("searchTextBox").value;
+        var titles = document.getElementsByClassName("card-title");
+        for (var i = 0; i < titles.length; i++) {
+            if (titles[i].innerHTML.toLowerCase().includes(searchPattern.toLowerCase())) {
+                titles[i].parentNode.parentNode.parentNode.style.display = "inline-block";
+            } else {
+                titles[i].parentNode.parentNode.parentNode.style.display = "none";
+            }
+        }
+    }
+</script>
+
+<div style="margin-top: 30px; margin-left: 3.5%">
+    <input type="text" style="width:75%; max-width: 100%;" id="searchTextBox" />
+    <input type="submit" onclick="searchProducts()" value="search"/>
+</div>
+    <div style="display:block" class="container">
+        @foreach (var product in Model)
+        {
+            <div class="card" style="width: 200px; border: 1px black solid; margin: 25px; display:inline-block;">
+                @using (Html.BeginForm("ViewProduct", "Product", FormMethod.Post))
+                {
+
+                <input type="submit" style="background: url(@product.ProductImageLocation);background-size: 198px 200px;width: 198px; height: 200px; border-style: none;" class="card-img-top"  value=""/>
+                <div class="card-body">
+                    <h5 class="card-title" style="text-align: center">@product.Name</h5>
+                    <h5 class="card-text" style="text-align: center">$@product.Price.ToString()</h5>
                     <input type="hidden" value="@product.ProductId" name="ProductId" />
-                    <input type="submit" value="View" style="width: 50%; margin-left: 25%;" />
-                }
-            </div>
-        </div>
-    
-}
+                </div>
+        
+        }
+    </div>
+    }
 </div>

@@ -21,24 +21,117 @@ namespace CST326.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ResetPassword()
+        { 
+            return View();
+        }
+
+        [HttpPost]
+
+        public ActionResult ResetPassword(UserModel user)
+        {
+            
+            UserDAO dao = new UserDAO();
+            if (dao.isEmailValid(user))
+            {
+                bool updateSuccessful = dao.setNewPassword(user);
+                if (updateSuccessful)
+                {
+                    return RedirectToAction("Login");
+                } else
+                {
+                    string email = user.Email;
+                    ModelState.Clear();
+                    ModelState.AddModelError("Email", "There was an unexpected error trying to update the password. Please reach out to the support team.");
+                    return View(user);
+                }
+            }
+            else
+            {
+                ModelState.Clear();
+                ModelState.AddModelError("Email", "The email is not found. Please validate that your email is correct.");
+                return View(user);
+            }
+        }
+
+
         [HttpPost]
         public ActionResult AddUser(UserModel user)
         {
+            ModelState["FirstName"].Errors.Clear();
+            if(user.FirstName == null || user.LastName == null || user.Email == null || user.Password == null)
+            {
+                ModelState.AddModelError("FirstName", "All fields must be populated before creating your account.");
+                return View("Signup", user);
+            }
+
             UserDAO dao = new UserDAO();
 
             var results = dao.AddUser(user);
 
-            return Content(results.ToString());
-        } 
+            return RedirectToAction("Login");
+        }
 
         [HttpPost]
         public ActionResult AuthenticateUser(UserModel user)
         {
-            UserDAO dao = new UserDAO();
+            if (ModelState.IsValid) { 
+                UserDAO dao = new UserDAO();
 
-            var results = dao.Authenticate(user);
+                var customer = dao.Authenticate(user);
 
-            return Content(results.ToString());
+                if (customer.Email != null)
+                {
+                    Session["User"] = customer;
+                    //return Content(customer.UserId.ToString());
+                    return RedirectToAction("StoreFront", "Product");
+                }
+                else
+                {
+                    ModelState.AddModelError("Email", "Username or password is incorrect. Please try again.");
+                    return View("Login", user);
+                    
+                }
+            } else {
+                return View("Login", user);
+            }
+        }
+
+        public ActionResult SignOut()
+        {
+            if(Session["User"] != null)
+            {
+                Session["User"] = null;
+            }
+            return RedirectToAction("Login");
+        }
+    
+        [HttpGet]
+        public ActionResult ViewOrders()
+        {
+            if(Session["user"] != null)
+            {
+                UserModel user = (UserModel)Session["user"];
+
+                OrdersDAO dao = new OrdersDAO();
+                List<OrderModel> orders = dao.getCustomerOrders(user);
+
+                return View(orders);
+            } else
+            {
+                return RedirectToAction("Login", "User", null);
+            }
+        }
+    
+        [HttpGet]
+        public ActionResult ViewOrder(int orderid)
+        {
+            OrdersDAO dao = new OrdersDAO();
+            OrderModel order = dao.getOrderDetails(orderid);
+
+            return View(order);
+
         }
     }
 }

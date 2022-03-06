@@ -15,8 +15,11 @@ namespace CST326.DAO
 
         string addUserQry = "insert into Users (First_Name, Last_Name, Email, Password) values (@FirstName, @LastName, @Email, @Password)";
 
-        string authenticateQry = "select count(1) as 'count' from users where email = @email and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+        string authenticateQry = "select User_Id as 'UserId', First_Name as 'FirstName', Last_Name as 'LastName', Email as 'Email' from users where email = @email and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
 
+        string isEmailValidQry = "select count(*) as 'Count' from [Users] where [Email] = @Email";
+
+        string setNewPasswordQry = "update [Users] set [Password] = @password where [Email] = @Email";
 
         public bool AddUser(UserModel user)
         {
@@ -55,7 +58,7 @@ namespace CST326.DAO
             }
         }
 
-        public bool Authenticate(UserModel user)
+        public UserModel Authenticate(UserModel user)
         {
             using(SqlConnection conn = new SqlConnection(dbConnStr))
             {
@@ -68,27 +71,25 @@ namespace CST326.DAO
                     {
                         conn.Open();
                         var reader = cmd.ExecuteReader();
-                        int count = 0;
 
                         if (reader.HasRows)
                         {
                             reader.Read();
-                            count = (int)reader["count"];
+
+                            UserModel customer = new UserModel();
+                            customer.UserId = (int)reader["UserId"];
+                            customer.FirstName = reader["FirstName"].ToString();
+                            customer.LastName = reader["LastName"].ToString();
+                            customer.Email = reader["Email"].ToString();
+
                             conn.Close();
+                            return customer;
                         }
                         else
                         {
-                            return false;
-                        }
-                        
-                        if(count > 0)
-                        {
-                            return true;
-                        } else
-                        {
-                            return false;
-                        }
-                        
+                            conn.Close();
+                            return new UserModel();
+                        }                        
                     }
                     catch (SqlException ex)
                     {
@@ -104,5 +105,81 @@ namespace CST326.DAO
             }
 
         }
+ 
+        public bool isEmailValid(UserModel user)
+        {
+            using(SqlConnection conn = new SqlConnection(dbConnStr))
+            {
+                using(SqlCommand cmd = new SqlCommand(isEmailValidQry, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    try
+                    {
+                        conn.Open();
+                        SqlDataReader reader = cmd.ExecuteReader();
+
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            if((int)reader["Count"] == 1)
+                            {
+                                conn.Close();
+                                return true;
+                            } else
+                            {
+                                conn.Close();
+                                return false;
+                            }
+                        } else
+                        {
+                            conn.Close();
+                            return false;
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        throw new Exception("There was an error validating the user's email. Ex: " + ex.Message);
+                    } 
+                    catch(Exception ex)
+                    {
+                        throw new Exception("There was an unexpected error validate the user's email. Ex: " + ex.Message);
+                    }
+                }
+            }
+        }
+    
+        public bool setNewPassword(UserModel user)
+        {
+            using(SqlConnection conn = new SqlConnection(dbConnStr))
+            {
+                using(SqlCommand cmd = new SqlCommand(setNewPasswordQry, conn))
+                {
+                    cmd.Parameters.AddWithValue("@Email", user.Email);
+                    cmd.Parameters.AddWithValue("@password", user.Password);
+                    try
+                    {
+                        conn.Open();
+                        int results = cmd.ExecuteNonQuery();
+                        conn.Close();
+
+                        if(results == 1)
+                        {
+                            return true;
+                        } else
+                        {
+                            return false;
+                        }
+                    } catch (SqlException ex)
+                    {
+                        throw new Exception("There was an error updating the password. Ex: " + ex.Message);
+                    } catch (Exception ex)
+                    {
+                        throw new Exception("There was an unexpected error updating the password. Ex: " + ex.Message);
+                    }
+                }
+            }
+
+        }
+
     }
 }

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using CST326.Models;
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,30 +9,63 @@
     <link href="/Content/Custom/custom.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+<body style="padding-top: 0;">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Ed's PC Parts", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <label class="navbar-brand" style="width: 200px;">Ed's PC Parts</label>
             </div>
-            <div class="navbar-collapse collapse">
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Products", "Index", "Product")</li>
-                    <li>@Html.ActionLink("Login", "Login", "User")</li>
-                    <li>@Html.ActionLink("Sign Up", "SignUp", "User")</li>
-                    <li>@Html.ActionLink("Employee Portal", "Login", "Employee")</li>
+
+                    <li class="active">@Html.ActionLink("Home", "StoreFront", "Product")
+                        <span class="sr-only">(current)</span>
+                    </li>
 
                 </ul>
-            </div>
-        </div>
-    </div>
+                
+                <ul class="nav navbar-nav navbar-right">
+                    @{ string message = "";}
+                    @if (Session["User"] != null)
+                    {
+                        UserModel user = (UserModel)Session["User"];
+                        message = "Hello " + user.FirstName;
+                    }
+                    else
+                    {
+                        message = "Hello, sign in";
+                    }
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@message <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @if (Session["User"] == null)
+                            {
+                                <li>@Html.ActionLink("Login", "Login", "User")</li>
+                                <li>@Html.ActionLink("Sign Up", "SignUp", "User")</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("Orders", "ViewOrders", "User")</li>
+                                <li>@Html.ActionLink("Shopping Cart", "ShoppingCart", "ShoppingCart")</li>
+                                <li>@Html.ActionLink("Reset Password", "ResetPassword", "User")</li>
+                                <li role="separator" class="divider"></li>
+                                <li>@Html.ActionLink("Sign Out", "SignOut", "User")</li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
     <div class="container body-content">
         @RenderBody()
     </div>
