@@ -83,8 +83,8 @@ namespace CST326.DAO
             using (SqlCommand cmd = new SqlCommand(insertOrderXOrderItemsQry, conn))
             {
                 cmd.Transaction = tran;
-                cmd.Parameters.AddWithValue("@OrderItemId", OrderId);
-                cmd.Parameters.AddWithValue("@OrderId", OrderItemId);
+                cmd.Parameters.AddWithValue("@OrderItemId", OrderItemId);
+                cmd.Parameters.AddWithValue("@OrderId", OrderId);
 
                 try
                 {

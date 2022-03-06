@@ -18,7 +18,7 @@ namespace CST326.Models
         public double Total { get; set; }
         public double Tax { get; set; }
         public double AddressId { get; set; }
-
+        public double Shipping { get; set; }
         public List<ProductModel> OrderItems { get; set; }
         public void AddOrderItem(ProductModel product)
         {

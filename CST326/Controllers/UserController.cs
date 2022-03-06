@@ -123,5 +123,15 @@ namespace CST326.Controllers
                 return RedirectToAction("Login", "User", null);
             }
         }
+    
+        [HttpGet]
+        public ActionResult ViewOrder(int orderid)
+        {
+            OrdersDAO dao = new OrdersDAO();
+            OrderModel order = dao.getOrderDetails(orderid);
+
+            return View(order);
+
+        }
     }
 }
