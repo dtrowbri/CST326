@@ -24,5 +24,17 @@ namespace CST326.Models
         [StringLength(maximumLength: 200, MinimumLength = 1)]
         public string Password { get; set; }
 
+        public UserModel(int userId, string firstName, string lastName, string email, string password)
+        {
+            UserId = userId;
+            FirstName = firstName;
+            LastName = lastName;
+            Email = email;
+            Password = password;
+        }
+
+        public UserModel()
+        {
+        }
     }
 }

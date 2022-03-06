@@ -8,7 +8,7 @@ namespace CST326.Models
 {
     public class ProductModel
     {
-        private ProductCategory category;
+       // private ProductCategory category;
 
         public int ProductId { get; set; }
 
@@ -24,6 +24,7 @@ namespace CST326.Models
         public string ProductImageLocation { get; set; }
 
         public HttpPostedFileBase ImageFile { get; set; }
+
 
         [Range(0, 1000)]
         [Display(Name= "QTY")]
