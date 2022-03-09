@@ -83,7 +83,7 @@ namespace CST326.DAO
                             product.Price = Convert.ToDouble(results["Price"]);
                             product.Description = results["Description"].ToString();
                             product.ProductImageLocation = results["ImageLocation"].ToString().Replace('\\', '/');
-                            product.Category = (ProductCategory)(int)results["Category"];
+                            product.Category = (ProductCategory)Enum.Parse(typeof(ProductCategory), results["Category"].ToString());
 
                             ProductList.Add(product);
                         }
@@ -118,7 +118,7 @@ namespace CST326.DAO
                             product.ProductId = (int)reader["ProductId"];
                             product.Description = reader["Description"].ToString();
                             product.Price = Convert.ToDouble(reader["Price"]);
-                            product.Category = (ProductCategory)(int)reader["Category"];
+                            product.Category = (ProductCategory)Enum.Parse(typeof(ProductCategory), reader["Category"].ToString()); ;
                             product.ProductImageLocation = reader["ImageLocation"].ToString();
                             product.Name = reader["Name"].ToString();
                             
