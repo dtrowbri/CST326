@@ -12,6 +12,12 @@ namespace CST326.Controllers
     public class StoreRepController : Controller
     {
         // GET: StoreRep
+
+        public ActionResult Login()
+        {
+            return View();       
+        }
+
         public ActionResult ProductList()
         {
             ProductDAO dao = new ProductDAO();
