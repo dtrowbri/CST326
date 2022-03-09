@@ -31,23 +31,24 @@
 
 <div class="container" style="margin-left:20%; max-width: 40%;" >
     <div>
-        <img src="@Model.ProductImageLocation" style="width: 250px; height: 250px; margin-left: 35%" />
-    </div>
-    <div>
-        <p class="title">@Model.Name</p>
-        <p class="description">@Model.Description</p>
-        <p class="price">$@Model.Price</p>
-        @using(Html.BeginForm("AddToCart", "Product", FormMethod.Post))
-        {
-            <div class="form-group">
-                @Html.HiddenFor(model => model.ProductId)
-                @Html.LabelFor(model => model.Quantity)
-                @Html.EditorFor(model => model.Quantity )
-            </div>
+        <img src="@Model.ProductImageLocation" style="width: 450px; height: 250px; " />
 
-            <div class="form-group" style="margin-top: 25px;">
-                <input type="submit" value="Add to Cart" class="btn btn-primary" />
-            </div>
-        }
+        <div>
+            <p class="title">@Model.Name</p>
+            <p class="description">@Model.Description</p>
+            <p class="price">$@Model.Price</p>
+            @using (Html.BeginForm("AddToCart", "Product", FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.ProductId)
+                    @Html.LabelFor(model => model.Quantity)
+                    @Html.EditorFor(model => model.Quantity)
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <input type="submit" value="Add to Cart" class="btn btn-primary" />
+                </div>
+            }
+        </div>
     </div>
 </div>
