@@ -66,6 +66,7 @@
                             else if (Session["Employee"] != null)
                             {
                                 <li>@Html.ActionLink("Products", "ProductList", "StoreRep")</li>
+                                <li>@Html.ActionLink("Add Product", "AddProduct", "Product")</li>
                                 <li>@Html.ActionLink("Add Employee", "NewEmployee", "StoreRep")</li>
                                 <li>@Html.ActionLink("Sign Out", "SignOut", "StoreRep")</li>
                             }

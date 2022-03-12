@@ -42,6 +42,10 @@
                 @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
             </div>
             <div class="form-group">
+                @Html.Label("Phone Number", htmlAttributes: new { @class = "col-md-3 col-form-label" })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-group">
                 @Html.Label("Password", htmlAttributes: new { @class = "col-md-3 col-form-label" })
                 @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control", id = "PasswordLabel", onkeyup = "ValidatePasswordMatch()" })
             </div>
@@ -54,7 +58,7 @@
                 <input type="radio" class="form-control" />
             </div>
             <div class="col-md-offset-3 form-group">
-                <button type="submit" class="btn btn-primary" id="SubmitButton">SignUp</button>
+                <button type="submit" class="btn btn-primary" id="SubmitButton">Add Employee</button>
             </div>
         }
     </div>

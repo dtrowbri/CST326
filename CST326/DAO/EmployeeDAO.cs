@@ -12,7 +12,7 @@ namespace CST326.DAO
     {
         string dbConnStr = ConfigurationManager.ConnectionStrings["SiteDB"].ConnectionString;
 
-        string addUserQry = "insert into Employees (FirstName, LastName, PhoneNumber, EmailAddress, Password, IsAdmin) values (@FirstName, @LastName, @PhoneNumber, @Email, @Password, @Admin)";
+        string addEmployeeQry = "insert into Employees (FirstName, LastName, PhoneNumber, EmailAddress, Password, IsAdmin) values (@FirstName, @LastName, @PhoneNumber, @Email, @Password, @Admin)";
 
         string authenticateQry = "select EmployeeId as 'EmployeeId', FirstName as 'FirstName', LastName as 'LastName', EmailAddress as 'Email' from employees where EmployeeId = @employeeId and Password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
 
@@ -21,7 +21,7 @@ namespace CST326.DAO
         {
             using (SqlConnection conn = new SqlConnection(dbConnStr))
             {
-                using (SqlCommand cmd = new SqlCommand(addUserQry, conn))
+                using (SqlCommand cmd = new SqlCommand(addEmployeeQry, conn))
                 {
                     cmd.Parameters.AddWithValue("@FirstName", employee.FirstName);
                     cmd.Parameters.AddWithValue("@LastName", employee.LastName);
