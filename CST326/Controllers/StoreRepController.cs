@@ -27,7 +27,7 @@ namespace CST326.Controllers
         public ActionResult AddEmployee(EmployeeModel employee)
         {
             ModelState["FirstName"].Errors.Clear();
-            if (employee.FirstName == null || employee.LastName == null || employee.Email == null || employee.Password == null)
+            if (employee.FirstName == null || employee.LastName == null || employee.Email == null || employee.PhoneNumber == null || employee.Password == null)
             {
                 ModelState.AddModelError("FirstName", "All fields must be populated before creating your account.");
                 return View("NewEmployee", employee);
@@ -139,10 +139,13 @@ namespace CST326.Controllers
 
                 if (wasSuccessful)
                 {
-                    return Content("The product was deleted successfully");
+                    TempData["DeletionStatus"] = "Product Successfully Deleted!";
+                    return View("ProductList");
                 } else
                 {
-                    return Content("The product failed to delete. Please contact your administrator.");
+
+                    TempData["DeletionStatus"] = "The product failed to delete. Please contact your administrator.";
+                    return View("ProductList");
                 }
             }
             catch(Exception Ex)

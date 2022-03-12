@@ -30,7 +30,8 @@ namespace CST326.Controllers
                 }
                 catch
                 {
-                    return Content("Error uploading image");
+                    TempData["Error"] = "Error uploading image";
+                    return View("AddProduct");
                 }
             }
 
@@ -40,10 +41,11 @@ namespace CST326.Controllers
                 dao.CreateProduct(product);
             } catch (Exception Ex)
             {
-                return Content(Ex.Message);
+                TempData["Error"] = Ex.Message;
+                return View("AddProduct");
             }
-
-            return Content("Product added successfully");
+            TempData["Success"] = "Product added successfully";
+            return View("ProductList");
         }
 
         public ActionResult StoreFront()
