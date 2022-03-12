@@ -1,10 +1,10 @@
-﻿using System;
+﻿using CST326.Models;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
-using System.Configuration;
-using CST326.Models;
-using System.Data.SqlClient;
 
 namespace CST326.DAO
 {
@@ -12,9 +12,9 @@ namespace CST326.DAO
     {
         string dbConnStr = ConfigurationManager.ConnectionStrings["SiteDB"].ConnectionString;
 
-        string addUserQry = "insert into Employees (Employee_Id, First_Name, Last_Name, Phone_Number, Email, Password) values (@FirstName, @LastName, @PhoneNumber, @Email, @Password)";
+        string addUserQry = "insert into Employees (FirstName, LastName, PhoneNumber, EmailAddress, Password, IsAdmin) values (@FirstName, @LastName, @PhoneNumber, @Email, @Password, @Admin)";
 
-        string authenticateQry = "select count(1) as 'count' from employees where employee_id = @employeeId and password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
+        string authenticateQry = "select EmployeeId as 'EmployeeId', FirstName as 'FirstName', LastName as 'LastName', EmailAddress as 'Email' from employees where EmployeeId = @employeeId and Password = @password COLLATE SQL_Latin1_General_CP1_CS_AS";
 
 
         public bool AddEmployee(EmployeeModel employee)
@@ -28,6 +28,7 @@ namespace CST326.DAO
                     cmd.Parameters.AddWithValue("@PhoneNumber", employee.PhoneNumber);
                     cmd.Parameters.AddWithValue("@Email", employee.Email);
                     cmd.Parameters.AddWithValue("@Password", employee.Password);
+                    cmd.Parameters.AddWithValue("@Admin", employee.Admin);
 
 
                     try
@@ -59,7 +60,7 @@ namespace CST326.DAO
             }
         }
 
-        public bool Authenticate(EmployeeModel employee)
+        public EmployeeModel Authenticate(EmployeeModel employee)
         {
             using (SqlConnection conn = new SqlConnection(dbConnStr))
             {
@@ -72,26 +73,24 @@ namespace CST326.DAO
                     {
                         conn.Open();
                         var reader = cmd.ExecuteReader();
-                        int count = 0;
 
                         if (reader.HasRows)
                         {
                             reader.Read();
-                            count = (int)reader["count"];
-                            conn.Close();
-                        }
-                        else
-                        {
-                            return false;
-                        }
 
-                        if (count > 0)
-                        {
-                            return true;
+                            EmployeeModel emp = new EmployeeModel();
+                            emp.EmployeeId = (int)reader["EmployeeId"];
+                            emp.FirstName = reader["FirstName"].ToString();
+                            emp.LastName = reader["LastName"].ToString();
+                            emp.Email = reader["Email"].ToString();
+
+                            conn.Close();
+                            return emp;
                         }
                         else
                         {
-                            return false;
+                            conn.Close();
+                            return new EmployeeModel();
                         }
 
                     }

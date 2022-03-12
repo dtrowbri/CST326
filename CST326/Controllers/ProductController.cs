@@ -65,10 +65,15 @@ namespace CST326.Controllers
         public ActionResult AddToCart(ProductModel product)
         {
             int quantity = product.Quantity;
-
             ProductDAO dao = new ProductDAO();
             product = dao.GetProduct(product.ProductId);
             product.Quantity = quantity;
+            if (quantity <= 0)
+            {
+                TempData["isAdded"] = "Quantity must be at least one";
+                return View("ViewProduct", product);
+            }
+           
             ShoppingCart shoppingCart;
             if(Session["ShoppingCart"] != null)
             {
@@ -88,8 +93,8 @@ namespace CST326.Controllers
             shoppingCart.Add(product);
 
             Session["ShoppingCart"] = shoppingCart;
-
-            return Content("Item added to cart");
+            TempData["isAdded"] = "Added to Cart!";
+            return View("ViewProduct", product);
         }
     }
 }

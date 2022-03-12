@@ -26,7 +26,7 @@ namespace CST326.Models
         public HttpPostedFileBase ImageFile { get; set; }
 
 
-        [Range(0, 1000)]
+        [Range(1, 1000)]
         [Display(Name= "QTY")]
         public int Quantity { get; set; }
     }
@@ -39,6 +39,7 @@ namespace CST326.Models
         Cables,
         Screen,
         PCI_Card,
+        CPU,
         NIC,
         Keyboard,
         Mouse,
