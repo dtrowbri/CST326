@@ -18,6 +18,28 @@ namespace CST326.Controllers
             return View();       
         }
 
+        public ActionResult NewEmployee()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddEmployee(EmployeeModel employee)
+        {
+            ModelState["FirstName"].Errors.Clear();
+            if (employee.FirstName == null || employee.LastName == null || employee.Email == null || employee.Password == null)
+            {
+                ModelState.AddModelError("FirstName", "All fields must be populated before creating your account.");
+                return View("NewEmployee", employee);
+            }
+
+            EmployeeDAO dao = new EmployeeDAO();
+
+            var results = dao.AddEmployee(employee);
+
+            return RedirectToAction("Login");
+        }
+
         [HttpPost]
         public ActionResult AuthenticateEmployee(EmployeeModel employee)
         {

@@ -198,6 +198,7 @@
     <Content Include="Views\User\ViewOrders.cshtml" />
     <Content Include="Views\User\ViewOrder.cshtml" />
     <Content Include="Views\StoreRep\Login.cshtml" />
+    <Content Include="Views\StoreRep\NewEmployee.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
