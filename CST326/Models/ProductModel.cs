@@ -39,6 +39,7 @@ namespace CST326.Models
         Cables,
         Screen,
         PCI_Card,
+        CPU,
         NIC,
         Keyboard,
         Mouse,

@@ -18,8 +18,36 @@ namespace CST326.Controllers
             return View();       
         }
 
+        [HttpPost]
+        public ActionResult AuthenticateEmployee(EmployeeModel employee)
+        {
+            if (ModelState.IsValid)
+            {
+                EmployeeDAO dao = new EmployeeDAO();
+
+                var emp = dao.Authenticate(employee);
+
+                if (emp.Email != null)
+                {
+                    Session["Employee"] = emp;
+                    return RedirectToAction("ProductList", "StoreRep");
+                }
+                else
+                {
+                    ModelState.AddModelError("EmployeeId", "Employee ID or Password is incorrect. Please try again.");
+                    return View("Login", employee);
+
+                }
+            }
+            else
+            {
+                return View("Login", employee) ;
+            }
+        }
+
         public ActionResult ProductList()
         {
+            
             ProductDAO dao = new ProductDAO();
             List<ProductModel> productlist = dao.GetAllProducts();
             return View(productlist);
@@ -65,7 +93,8 @@ namespace CST326.Controllers
                 bool wasSuccessful = dao.EditProduct(product);
                 if (wasSuccessful)
                 {
-                    return Content("The product has been updated");
+                    // return Content("The product has been updated");
+                    return View("ViewProduct", product);
                 } else
                 {
                     return Content("Failed to update product. Please contact administrator.");
@@ -98,6 +127,15 @@ namespace CST326.Controllers
             {
                 return Content(Ex.Message);
             }
+        }
+
+        public ActionResult SignOut()
+        {
+            if (Session["Employee"] != null)
+            {
+                Session["Employee"] = null;
+            }
+            return RedirectToAction("Login");
         }
     }
 }

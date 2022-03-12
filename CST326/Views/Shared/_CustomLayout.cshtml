@@ -31,10 +31,7 @@
                         @Html.ActionLink("Home", "StoreFront", "Product")
                     <span class="sr-only">(current)</span>
                     </li>
-                    <li class="active">
-                        @Html.ActionLink("Login", "Login", "User")
-                        <span class="sr-only">(current)</span>
-                    </li>
+                    
                     <li class="active">
                         @Html.ActionLink("Employee Portal", "Login", "StoreRep")
                         <span class="sr-only">(current)</span>
@@ -47,7 +44,12 @@
                     @if (Session["User"] != null)
                     {
                         UserModel user = (UserModel)Session["User"];
-                        message = "Hello " + user.FirstName;
+                        message = "Hello, " + user.FirstName;
+                    }
+                     else if (Session["Employee"] != null)
+                    {
+                        EmployeeModel employee = (EmployeeModel)Session["Employee"];
+                        message = "Hello, " + employee.FirstName;
                     }
                     else
                     {
@@ -56,10 +58,17 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">@message <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @if (Session["User"] == null)
+                            @if (Session["User"] == null && Session["Employee"] == null)
                             {
                                 <li>@Html.ActionLink("Login", "Login", "User")</li>
                                 <li>@Html.ActionLink("Sign Up", "SignUp", "User")</li>
+                            }
+                            else if (Session["Employee"] != null)
+                            {
+                                <li>@Html.ActionLink("Products", "ProductList", "StoreRep")</li>
+                                <li>@Html.ActionLink("Add Employee", "AddEmployee", "StoreRep")</li>
+                                <li>@Html.ActionLink("Sign Out", "SignOut", "StoreRep")</li>
+
                             }
                             else
                             {
