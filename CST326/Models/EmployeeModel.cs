@@ -16,6 +16,7 @@ namespace CST326.Models
         public string Email { get; set; }
         [Required]
         public string Password { get; set; }
+        [Range(0,1)]
         public int Admin { get; set; }
 
         public EmployeeModel(int employeeId, string firstName, string lastName, string phoneNumber, string email, int admin)
