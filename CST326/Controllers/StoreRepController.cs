@@ -140,12 +140,12 @@ namespace CST326.Controllers
                 if (wasSuccessful)
                 {
                     TempData["DeletionStatus"] = "Product Successfully Deleted!";
-                    return View("ProductList");
+                    return RedirectToAction("ProductList", "StoreRep");
                 } else
                 {
 
                     TempData["DeletionStatus"] = "The product failed to delete. Please contact your administrator.";
-                    return View("ProductList");
+                    return RedirectToAction("ProductList", "StoreRep");
                 }
             }
             catch(Exception Ex)
